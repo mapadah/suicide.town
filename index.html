@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>suicide.town</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* All black background */
+            color: #ffffff; /* White text for contrast */
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent scrolling */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative; /* For absolute positioning of buttons */
+        }
+
+        .snow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .snow {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .website-name {
+            font-size: 3rem; /* Smaller text */
+            font-weight: bold;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        .button {
+            color: #ffffff;
+            text-decoration: none; /* No underline */
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            color: #cccccc; /* Slight color change on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="snow-container" id="snow-container"></div>
+    <div class="website-name">suicide.town</div>
+    <div class="buttons">
+        <a href="https://four-net.live" class="button">four-net.live</a>
+        <!--<a href="#" class="button">Placeholder Site 2</a>
+        <a href="#" class="button">Placeholder Site 3</a> -->
+    </div>
+
+    <script>
+        // JavaScript to generate snowflakes randomly over time
+        const snowContainer = document.getElementById('snow-container');
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snow');
+            snowflake.style.left = Math.random() * 100 + '%'; // Random horizontal position
+            snowflake.style.width = Math.random() * 5 + 2 + 'px'; // Random size (2-7px)
+            snowflake.style.height = snowflake.style.width;
+            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // Random fall speed (5-10s)
+            snowflake.style.animationDelay = '0s'; // Start immediately
+            snowContainer.appendChild(snowflake);
+
+            // Remove snowflake after animation to prevent buildup
+            setTimeout(() => {
+                snowflake.remove();
+            }, parseFloat(snowflake.style.animationDuration) * 1000);
+        }
+
+        // Create snowflakes at random intervals
+        function startSnow() {
+            setInterval(() => {
+                createSnowflake();
+            }, Math.random() * 200 + 100); // Random interval between 100-300ms
+        }
+
+        startSnow();
+    </script>
+</body>
+</html>
