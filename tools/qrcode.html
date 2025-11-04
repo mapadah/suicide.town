@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qrcode.town</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* All black background */
+            color: #ffffff; /* White text for contrast */
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .snow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .snow {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .home-button:hover {
+            color: #cccccc;
+        }
+
+        .content {
+            margin-top: 100px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            width: 300px;
+            margin-bottom: 20px;
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="snow-container" id="snow-container"></div>
+    <a href="index.html" class="home-button">suicide.town</a>
+    <div class="content">
+        <h1>QR Code Generator</h1>
+        <input type="text" id="text" placeholder="Enter text or URL">
+        <br>
+        <button onclick="generateQR()">Generate QR Code</button>
+        <div id="qrcode"></div>
+    </div>
+
+    <script>
+        // JavaScript to generate snowflakes randomly over time
+        const snowContainer = document.getElementById('snow-container');
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snow');
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.width = Math.random() * 5 + 2 + 'px';
+            snowflake.style.height = snowflake.style.width;
+            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+            snowflake.style.animationDelay = '0s';
+            snowContainer.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, parseFloat(snowflake.style.animationDuration) * 1000);
+        }
+
+        function startSnow() {
+            setInterval(() => {
+                createSnowflake();
+            }, Math.random() * 200 + 100);
+        }
+
+        startSnow();
+
+        function generateQR() {
+            const text = document.getElementById('text').value;
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = ''; // Clear previous QR code
+            if (text) {
+                new QRCode(qrcodeContainer, {
+                    text: text,
+                    width: 256,
+                    height: 256,
+                    colorDark: "#ffffff",
+                    colorLight: "#000000",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        }
+    </script>
+</body>
+</html>
